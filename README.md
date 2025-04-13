@@ -1,94 +1,121 @@
-🔌 Projeto de Mestrado: Monitoramento Inteligente de Energia com ESP32
-ESP32 Banner
+# ⚡ Embedded Multi-Sensor Reader - ESP32 com INA219 + ADC Interno
 
-📝 Descrição do Projeto
-Este projeto implementa um sistema avançado de monitoramento de energia utilizando o microcontrolador ESP32, com capacidade de:
+Projeto embarcado desenvolvido em C para o **ESP32-S3**, que realiza **leitura de tensão e corrente** com o sensor **INA219**, além de leitura com o **ADC interno** e exibição dos dados via **UART**.
 
-Leitura precisa de tensão e corrente via sensor INA219
+---
 
-Conversão analógica-digital de alta precisão
+## 🚀 Funcionalidades
 
-Comunicação serial para debug e monitoramento
+- ✅ Leitura de tensão da linha (bus voltage) com o **INA219**
+- ✅ Leitura de corrente com o INA219 (via shunt)
+- ✅ Leitura de tensão via **ADC interno calibrado**
+- ✅ Indicação de atividade com **4 LEDs**
+- ✅ Comunicação com PC via **UART1**
+- ✅ Arquitetura baseada em **FreeRTOS**
 
-Controle de LEDs indicadores
+---
 
-Operação em tempo real com FreeRTOS
+## 📦 Estrutura do Projeto
 
-🛠️ Componentes Principais
-Componente	Função
-ESP32	Microcontrolador principal
-INA219	Sensor de corrente/tensão
-ADC interno	Leitura de sinais analógicos
-UART	Comunicação serial
-LEDs GPIO	Indicadores visuais
-📊 Funcionalidades
-c
-Copy
-void xLeituraINA219(void *arg) {
-    // Implementa leitura precisa de:
-    // - Tensão do barramento
-    // - Tensão do shunt
-    // - Corrente elétrica
-    // Envia dados via UART
-}
-🚀 Como Usar
-Hardware
+```
+├── main.c              # Código principal com leitura e comunicação  
+├── include/            # (separar headers aqui é recomendável em projetos grandes)  
+├── CMakeLists.txt      # Configuração para build no ESP-IDF  
+├── README.md           # Este arquivo  
+```
 
-Conecte o INA219 via I2C (GPIO4-SCL, GPIO5-SDA)
+---
 
-Configure os LEDs nos GPIOs 19, 20, 21 e 47
+## 🧠 Visão Geral do Sistema
 
-Conecte o UART1 (GPIO43-TX, GPIO44-RX)
+- **LEDs (GPIOs 19, 20, 21 e 47):** piscam em sequência para indicar o funcionamento da tarefa principal.  
+- **INA219:** lê tensão de barramento, tensão de shunt e corrente (em mA).  
+- **ADC Interno:** realiza leitura bruta e calibrada da tensão em um canal analógico.  
+- **UART1 (GPIOs 43/44):** transmite os dados lidos para o terminal serial.  
 
-Software
+---
 
-bash
-Copy
-# Clone o repositório
-git clone https://github.com/Vinicius-Moreira-Nascimento/Projeto_Mestrado.git
+## ⚙️ Definições de Pinos
 
-# Compile e flash (usando ESP-IDF)
-idf.py build flash monitor
-📈 Estrutura do Código
-mermaid
-Copy
-graph TD
-    A[app_main] --> B[Inicializa I2C]
-    A --> C[Configura GPIOs]
-    A --> D[Configura UART]
-    A --> E[Cria Tasks RTOS]
-    E --> F[xLED]
-    E --> G[xLeituraINA333]
-    E --> H[xLeituraINA219]
-📌 Especificações Técnicas
-Parâmetro	Valor
-Resolução ADC	12 bits
-Taxa I2C	100kHz
-Baud Rate UART	115200
-Frequência CPU	240MHz
-🌟 Recursos Avançados
-Multi-core processing com FreeRTOS
+| Função            | GPIO       |
+|------------------|------------|
+| LED1             | 19         |
+| LED2             | 20         |
+| LED3             | 21         |
+| LED4             | 47         |
+| UART1 TX         | 43         |
+| UART1 RX         | 44         |
+| I2C SDA (INA219) | 5          |
+| I2C SCL (INA219) | 4          |
+| ADC Interno      | Canal 2    |
 
-Calibração digital do ADC
+---
 
-Comunicação assíncrona entre tasks
+## 📡 Comunicação UART
 
-Gerenciamento de energia eficiente
+Os dados são transmitidos via UART no seguinte formato:
 
-📚 Documentação Adicional
-Datasheet ESP32
+```
+Tensão convertida: 1.6500V  
+Tensão Calibrada: 1650mV  
+Bus Voltage: 3.28 V  
+Shunt Voltage: 1.20 mV  
+Current: 25.00 mA  
+```
 
-Manual INA219
+---
 
-Guia FreeRTOS
+## 🛠️ Compilação e Upload
 
-👨‍💻 Autor
-Vinícius Moreira Nascimento
-GitHub
-Email
+### Pré-requisitos
 
-📜 Licença
-Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para detalhes.
+- [ESP-IDF](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/index.html)  
+- Placa **ESP32-S3**  
+- Sensor **INA219**  
+- Terminal serial (PuTTY, TeraTerm ou `idf.py monitor`)  
 
-<div align="center"> <img src="https://raw.githubusercontent.com/Vinicius-Moreira-Nascimento/Projeto_Mestrado/main/assets/esp32-diagram.png" width="400"> <p>Diagrama simplificado da arquitetura</p> </div>
-💡 Dica profissional: Use idf.py monitor para ver os dados de tensão/corrente em tempo real!
+### Build
+
+```
+idf.py set-target esp32s3  
+idf.py build  
+idf.py flash monitor  
+```
+
+---
+
+## 📸 Demonstração
+
+*Adicione aqui um GIF ou imagem mostrando os LEDs em funcionamento e a UART no terminal serial.*
+
+---
+
+## ⏱️ Tarefas RTOS
+
+| Nome da Tarefa       | Prioridade | Função                                |
+|----------------------|------------|----------------------------------------|
+| `xLED`               | 2          | Piscar LEDs sequencialmente            |
+| `xLeituraINA333`     | 1          | Leitura via ADC interno                |
+| `xLeituraINA219`     | 2          | Leitura via sensor INA219              |
+
+---
+
+## 🌱 Expansões Futuras
+
+- ☑ Registro em cartão SD  
+- ☑ Envio via MQTT (Wi-Fi)  
+- ☑ Integração com display OLED  
+- ☑ Suporte a sensores de temperatura  
+
+---
+
+## 📄 Licença
+
+Distribuído sob a licença MIT.
+
+---
+
+## ✍️ Autor
+
+Desenvolvido por **[Seu Nome]**  
+Entre em contato e contribua!
