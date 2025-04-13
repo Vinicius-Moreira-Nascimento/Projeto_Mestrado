@@ -1,0 +1,16 @@
+{
+    "C_Cpp.intelliSenseEngine": "default",
+    "idf.espIdfPathWin": "C:\\Users\\Vinicius Moreira\\esp\\v5.4\\esp-idf",
+    "idf.openOcdConfigs": [
+        "board/esp32-wrover-kit-3.3v.cfg"
+    ],
+    "idf.toolsPathWin": "c:\\Users\\ViniciusMoreira\\.espressif",
+    "files.associations": {
+        "gpio.h": "c"
+    },
+    "idf.flashType": "UART",
+    "idf.portWin": "COM3",
+    "idf.customExtraVars": {
+        "IDF_TARGET": "esp32s3"
+    }
+}

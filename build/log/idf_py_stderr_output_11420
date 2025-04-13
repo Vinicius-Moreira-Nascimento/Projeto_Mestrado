@@ -1,0 +1,24 @@
+fatal: detected dubious ownership in repository at 'C:/Users/Vinicius Moreira/esp/v5.4/esp-idf'
+'C:/Users/Vinicius Moreira/esp/v5.4/esp-idf' is owned by:
+	'S-1-5-32-544'
+but the current user is:
+	'S-1-5-21-817715988-3402030940-1143496952-1001'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory 'C:/Users/Vinicius Moreira/esp/v5.4/esp-idf'
+fatal: detected dubious ownership in repository at 'C:/Users/Vinicius Moreira/esp/v5.4/esp-idf'
+'C:/Users/Vinicius Moreira/esp/v5.4/esp-idf' is owned by:
+	'S-1-5-32-544'
+but the current user is:
+	'S-1-5-21-817715988-3402030940-1143496952-1001'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory 'C:/Users/Vinicius Moreira/esp/v5.4/esp-idf'
+fatal: detected dubious ownership in repository at 'C:/Users/Vinicius Moreira/esp/v5.4/esp-idf/components/openthread/openthread'
+'C:/Users/Vinicius Moreira/esp/v5.4/esp-idf/components/openthread/openthread/.git' is owned by:
+	'S-1-5-32-544'
+but the current user is:
+	'S-1-5-21-817715988-3402030940-1143496952-1001'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory 'C:/Users/Vinicius Moreira/esp/v5.4/esp-idf/components/openthread/openthread'
