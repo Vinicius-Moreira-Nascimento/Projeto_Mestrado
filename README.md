@@ -84,12 +84,6 @@ idf.py flash monitor
 
 ---
 
-## 📸 Demonstração
-
-*Adicione aqui um GIF ou imagem mostrando os LEDs em funcionamento e a UART no terminal serial.*
-
----
-
 ## ⏱️ Tarefas RTOS
 
 | Nome da Tarefa       | Prioridade | Função                                |
